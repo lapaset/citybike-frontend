@@ -5,6 +5,7 @@ import App from "./App.tsx"
 import "./index.css"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import ErrorPage from "./pages/ErrorPage.tsx"
+import StationPage from "./pages/StationPage.tsx"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,10 +18,16 @@ const queryClient = new QueryClient({
 
 const paths = [
   {
-    path: '/',
+    path: "/",
     element: <App />,
-    errorElement: <ErrorPage />
-  }
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "station/:id",
+        element: <StationPage />,
+      },
+    ],
+  },
 ]
 
 const router = createBrowserRouter(paths)
