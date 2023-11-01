@@ -1,8 +1,6 @@
-import { QueryFunctionContext, useInfiniteQuery } from "react-query"
 import "./App.css"
-import { useEffect, useRef } from "react"
-import { getInfiniteStations } from "./api/stations"
-
+import { useRef } from "react"
+import useStations from "./hooks/useStations"
 
 interface Station {
   id: number
@@ -14,39 +12,7 @@ interface Station {
 
 const App = () => {
   const bottomRef = useRef<HTMLDivElement | null>(null)
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery(
-    ["stations"],
-    (p: QueryFunctionContext) => getInfiniteStations(p.pageParam || 0),
-    {
-      getNextPageParam: (lastPage) => lastPage.nextMax,
-      retry: 1,
-    }
-  )
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        bottomRef.current &&
-        bottomRef.current.getBoundingClientRect().bottom - 10 <=
-          window.innerHeight &&
-        hasNextPage &&
-        !isLoading &&
-        !isFetchingNextPage
-      ) {
-        fetchNextPage()
-      }
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [fetchNextPage, hasNextPage, isLoading, isFetchingNextPage, bottomRef])
-
+  const {data, isFetchingNextPage, status} = useStations(bottomRef)
   const pages = status === "success" && data?.pages
 
   return (
