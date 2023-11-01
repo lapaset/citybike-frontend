@@ -2,6 +2,14 @@ import { QueryFunctionContext, useInfiniteQuery } from "react-query"
 import { getInfiniteStations } from "../api/stations"
 import { RefObject, useEffect } from "react"
 
+export interface Station {
+  id: number
+  station_name: string
+  station_address: string
+  coordinate_x: string
+  coordinate_y: string
+}
+
 const useStations = (bottomRef: RefObject<HTMLDivElement | null>) => {
   const {
     data,
