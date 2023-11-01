@@ -1,11 +1,11 @@
 import "./App.css"
 import { useRef } from "react"
-import useStations, { Station } from "./hooks/useStations"
+import useStationList, { Station } from "./hooks/useStationList"
 import StationList from "./components/StationList"
 
 const App = () => {
   const bottomRef = useRef<HTMLDivElement | null>(null)
-  const {data, isFetchingNextPage, status} = useStations(bottomRef)
+  const {data, isFetchingNextPage, status} = useStationList(bottomRef)
   const pages = status === "success" && data?.pages
   const stations: Station[] = pages ? pages.reduce((all, page)  => all.concat(page.data), []) : []
 

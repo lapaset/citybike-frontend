@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Station } from "../hooks/useStations"
+import { Station } from "../hooks/useStationList"
 
 type StationListProps = {
   stations: Station[]

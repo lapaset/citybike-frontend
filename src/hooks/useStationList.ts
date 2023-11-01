@@ -1,5 +1,5 @@
 import { QueryFunctionContext, useInfiniteQuery } from "react-query"
-import { getInfiniteStations } from "../api/stations"
+import { getInfiniteStations } from "../api/station-list"
 import { RefObject, useEffect } from "react"
 
 export interface Station {
@@ -10,7 +10,7 @@ export interface Station {
   coordinate_y: string
 }
 
-const useStations = (bottomRef: RefObject<HTMLDivElement | null>) => {
+const useStationList = (bottomRef: RefObject<HTMLDivElement | null>) => {
   const {
     data,
     fetchNextPage,
@@ -47,4 +47,4 @@ const useStations = (bottomRef: RefObject<HTMLDivElement | null>) => {
   return {data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage, status}
 }
 
-export default useStations
+export default useStationList
