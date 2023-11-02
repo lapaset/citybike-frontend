@@ -1,21 +1,32 @@
-import { useParams } from "react-router-dom"
+import { LoaderFunction, useLoaderData } from "react-router-dom"
 import { getStationInfo } from "../api/station-info"
-import { useQuery } from "react-query"
 import styled from "styled-components"
 import Card from "../components/Card"
 import Statistic from "../components/Statistic"
 import Map from "../components/Map"
 import { LatLngExpression } from "leaflet"
 
+type StationInfo = {
+  id: number
+  station_name: string
+  station_address: string
+  start_count: number
+  end_count: number
+  avg_distance: number
+  avg_duration: number
+  coordinate_x: number
+  coordinate_y: number
+}
+
+export const loader: LoaderFunction = async ({ params }) => {
+  const stationData = await getStationInfo(params.id)
+  console.log("stationData", stationData)
+
+  return { stationData }
+}
+
 const StationPage = () => {
-  const { id } = useParams()
-
-  const response = useQuery(["stats", id], () => getStationInfo(id))
-  const stationData = response.status === "success" && response.data
-
-  if (response.status !== "loading" && !stationData) {
-    return null
-  }
+  const { stationData } = useLoaderData() as Awaited<{stationData: StationInfo}>
 
   const {
     station_name,
@@ -39,26 +50,23 @@ const StationPage = () => {
 
   return (
     <Container>
-      {response.status === "loading" && <p>Loading...</p>}
-      {response.status === "success" && (
-        <>
-          <FlexColumn>
+      <>
+        <FlexColumn>
           <Header>{station_name}</Header>
           <Address>{station_address}</Address>
           {position && <Map position={position} />}
-          </FlexColumn>
-          <FlexColumn>
-            <Card title="Journeys total">
-              <Statistic title="from" value={start_count} />
-              <Statistic title="to" value={end_count} />
-            </Card>
-            <Card title="Journeys from this station">
-              <Statistic title="average distance" value={averageDistance} />
-              <Statistic title="average duration" value={averageDuration} />
-            </Card>
-          </FlexColumn>
-        </>
-      )}
+        </FlexColumn>
+        <FlexColumn>
+          <Card title="Journeys total">
+            <Statistic title="from" value={start_count + ''} />
+            <Statistic title="to" value={end_count + ''} />
+          </Card>
+          <Card title="Journeys from this station">
+            <Statistic title="average distance" value={averageDistance} />
+            <Statistic title="average duration" value={averageDuration} />
+          </Card>
+        </FlexColumn>
+      </>
     </Container>
   )
 }

@@ -5,7 +5,7 @@ import App from "./App.tsx"
 import "./index.css"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import ErrorPage from "./pages/ErrorPage.tsx"
-import StationPage from "./pages/StationPage.tsx"
+import StationPage, { loader } from "./pages/StationPage.tsx"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +25,7 @@ const paths = [
       {
         path: "station/:id",
         element: <StationPage />,
+        loader: loader
       },
     ],
   },
