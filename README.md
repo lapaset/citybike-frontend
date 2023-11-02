@@ -1,27 +1,37 @@
-# React + TypeScript + Vite
+# City Bike frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of a web application, that displays data from journeys made with city bikes in the Helsinki Capital area.
 
-Currently, two official plugins are available:
+You can read more about the requirements for this application from [the exercise by Solita](https://github.com/solita/dev-academy-spring-2024-exercise).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can find the backend from [a separate repository](https://github.com/lapaset/citybike-backend).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Run Locally
 
-- Configure the top-level `parserOptions` property like this:
+[Set up and run the backend](https://github.com/lapaset/citybike-backend#run-locally).
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+Clone the project
+
+```bash
+  git clone git@github.com:lapaset/citybike-frontend.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Go to the project directory
+
+```bash
+  cd citybike-frontend
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm build & npm run preview
+```
+
