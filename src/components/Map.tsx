@@ -16,7 +16,7 @@ const Map: FC<MapProps> = ({ position }) => (
       center={position}
       zoom={16}
       scrollWheelZoom={false}
-      style={{ width: "300px", height: "200px" }}
+      style={{ width: "400px", height: "300px" }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -30,7 +30,7 @@ const Map: FC<MapProps> = ({ position }) => (
 export default Map
 
 const Container = styled(MapContainer)`
-  width: 300px;
-  height: 200px;
+  width: 400px;
+  height: 300px;
   margin: 36px 0;
 `
