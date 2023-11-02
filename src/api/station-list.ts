@@ -1,12 +1,15 @@
-export const getStations = async (
-  previousMaxId?: number
-) => {
+export const getStations = async (previousMaxId?: number) => {
   const previousMax = previousMaxId ? `?previousMax=${previousMaxId}` : ""
   const response: Response = await fetch(
     `http://localhost:3001/api/station${previousMax}`
   )
-  const data = await response.json()
-  return data
+
+  if (response.status !== 200) {
+    throw new Error(`${response.status} ${response.statusText}`)
+  } else {
+    const data = await response.json()
+    return data
+  }
 }
 
 export const getInfiniteStations = async (previousMaxId: number) => {

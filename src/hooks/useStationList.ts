@@ -24,6 +24,7 @@ const useStationList = (bottomRef: RefObject<HTMLDivElement | null>) => {
     {
       getNextPageParam: (lastPage) => lastPage.nextMax,
       retry: 1,
+      useErrorBoundary: true
     }
   )
 
