@@ -72,7 +72,6 @@ const Nav = styled.nav`
 const Main = styled.main`
   ${containerStyles}
   grid-area: main;
-  padding: 8px 24px;
   margin: 24px 16px;
   border-radius: 8px;
   min-height: 50%;
