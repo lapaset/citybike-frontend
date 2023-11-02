@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom"
 import { getStationInfo } from "../api/station-info"
 import { useQuery } from "react-query"
 import styled from "styled-components"
+import Card from "../components/Card"
+import Statistic from "../components/Statistic"
 
 const StationPage = () => {
   const { id } = useParams()
@@ -22,6 +24,11 @@ const StationPage = () => {
     avg_duration,
   } = stationData
 
+  const averageDistance = `${(avg_distance / 1000).toFixed(2)} km`
+  const averageDuration = `${(avg_duration / 60).toFixed()} min ${(
+    avg_duration % 60
+  ).toFixed()} sec`
+
   return (
     <Container>
       {response.status === "loading" && <p>Loading...</p>}
@@ -32,37 +39,13 @@ const StationPage = () => {
             <p>{station_address}</p>
           </FlexColumn>
           <FlexColumn>
-            <Card>
-              <h3>Journeys total</h3>
-              <Stat>
-              <h4>from</h4>
-              <p>
-                <strong>{start_count}</strong>
-              </p>
-              </Stat>
-              <Stat>
-              <h4>to</h4>
-              <p>
-                <strong>{end_count}</strong>
-              </p>
-              </Stat>
+            <Card title="Journeys total">
+              <Statistic title="from" value={start_count} />
+              <Statistic title="to" value={end_count} />
             </Card>
-            <Card>
-              <h3>Journeys from this station</h3>
-              <Stat><h4>average distance</h4>
-              <p>
-                <strong>{(avg_distance / 1000).toFixed(2)} km</strong>
-              </p>
-              </Stat>
-              <Stat>
-              <h4>average duration</h4>
-              <p>
-                <strong>
-                  {(avg_duration / 60).toFixed()} min{" "}
-                  {(avg_duration % 60).toFixed()} sec
-                </strong>
-              </p>
-              </Stat>
+            <Card title="Journeys from this station">
+              <Statistic title="average distance" value={averageDistance} />
+              <Statistic title="average duration" value={averageDuration} />
             </Card>
           </FlexColumn>
         </>
@@ -83,31 +66,3 @@ const Container = styled.div`
 const FlexColumn = styled.div`
   margin: 0;
 `
-
-const Card = styled.section`
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  border: 1px solid aliceblue;
-  border-radius: 8px;
-  overflow: hidden;
-  margin: 24px;
-  text-align: center;
-
-  h3 {
-    background: aliceblue;
-    margin: 0;
-    padding: 16px 24px;
-  }
-`
-
-const Stat = styled.div`
-  margin: 16px;
-  p, h4 {
-    margin: 0;
-    font-weight: 400;
-  }
-  strong {
-    font-size: 1.5em;
-    font-weight: 700;
-  }
-`
-
