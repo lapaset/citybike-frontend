@@ -32,6 +32,6 @@ Install dependencies
 Start the server
 
 ```bash
-  npm build & npm run preview
+  npm run build & npm run preview
 ```
 
