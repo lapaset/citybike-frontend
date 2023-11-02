@@ -4,6 +4,8 @@ import { useQuery } from "react-query"
 import styled from "styled-components"
 import Card from "../components/Card"
 import Statistic from "../components/Statistic"
+import Map from "../components/Map"
+import { LatLngExpression } from "leaflet"
 
 const StationPage = () => {
   const { id } = useParams()
@@ -22,12 +24,18 @@ const StationPage = () => {
     end_count,
     avg_distance,
     avg_duration,
+    coordinate_x,
+    coordinate_y,
   } = stationData
 
   const averageDistance = `${(avg_distance / 1000).toFixed(2)} km`
   const averageDuration = `${(avg_duration / 60).toFixed()} min ${(
     avg_duration % 60
   ).toFixed()} sec`
+  const position: LatLngExpression | undefined =
+    coordinate_x !== undefined && coordinate_y !== undefined
+      ? [coordinate_y, coordinate_x]
+      : undefined
 
   return (
     <Container>
@@ -35,8 +43,9 @@ const StationPage = () => {
       {response.status === "success" && (
         <>
           <FlexColumn>
-            <h2>{station_name}</h2>
-            <p>{station_address}</p>
+          <Header>{station_name}</Header>
+          <Address>{station_address}</Address>
+          {position && <Map position={position} />}
           </FlexColumn>
           <FlexColumn>
             <Card title="Journeys total">
@@ -65,4 +74,12 @@ const Container = styled.div`
 
 const FlexColumn = styled.div`
   margin: 0;
+`
+
+const Header = styled.h2`
+  margin-bottom: 8px;
+`
+
+const Address = styled.p`
+  margin-top: 0;
 `
