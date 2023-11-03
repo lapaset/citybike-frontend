@@ -6,6 +6,7 @@ import "./index.css"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import ErrorPage from "./pages/ErrorPage.tsx"
 import StationPage, { loader } from "./pages/StationPage.tsx"
+import WelcomePage from "./pages/WelcomePage.tsx"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,10 @@ const paths = [
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        index: true,
+        element: <WelcomePage/>
+      },
       {
         path: "station/:id",
         element: <StationPage />,

@@ -50,7 +50,6 @@ const StationPage = () => {
 
   return (
     <Container>
-      <>
         <FlexColumn>
           <Header>{station_name}</Header>
           <Address>{station_address}</Address>
@@ -66,7 +65,6 @@ const StationPage = () => {
             <Statistic title="average duration" value={averageDuration} />
           </Card>
         </FlexColumn>
-      </>
     </Container>
   )
 }
