@@ -1,6 +1,6 @@
 import { QueryFunctionContext, useInfiniteQuery } from "react-query"
 import { getInfiniteStations } from "../api/station-list"
-import { RefObject, useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 export interface Station {
   id: number
@@ -10,7 +10,7 @@ export interface Station {
   coordinate_y: string
 }
 
-const useStationList = (bottomRef: RefObject<HTMLDivElement | null>) => {
+const useStationList = () => {
   const {
     data,
     fetchNextPage,
@@ -27,6 +27,11 @@ const useStationList = (bottomRef: RefObject<HTMLDivElement | null>) => {
       useErrorBoundary: true
     }
   )
+  const bottomRef = useRef<HTMLDivElement | null>(null)
+  const pages = status === "success" && data?.pages
+  const stations: Station[] = pages
+    ? pages.reduce((all, page) => all.concat(page.data), [])
+    : []
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +50,7 @@ const useStationList = (bottomRef: RefObject<HTMLDivElement | null>) => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [fetchNextPage, hasNextPage, isLoading, isFetchingNextPage, bottomRef])
 
-  return {data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage, status}
+  return {stations, isFetchingNextPage, bottomRef}
 }
 
 export default useStationList

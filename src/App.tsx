@@ -1,16 +1,10 @@
-import { useRef } from "react"
-import useStationList, { Station } from "./hooks/useStationList"
+import useStationList from "./hooks/useStationList"
 import StationList from "./components/StationList"
 import { Outlet } from "react-router-dom"
 import styled from "styled-components"
 
 const App = () => {
-  const bottomRef = useRef<HTMLDivElement | null>(null)
-  const { data, isFetchingNextPage, status } = useStationList(bottomRef)
-  const pages = status === "success" && data?.pages
-  const stations: Station[] = pages
-    ? pages.reduce((all, page) => all.concat(page.data), [])
-    : []
+  const { stations, isFetchingNextPage, bottomRef } = useStationList()
 
   return (
     <Grid>
